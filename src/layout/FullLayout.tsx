@@ -4,7 +4,6 @@ import { ThemeProvider } from "@emotion/react";
 import { Box, Container, Typography, styled } from "@mui/material";
 import { useState } from "react";
 import theme from "@/theme";
-import FullLayout from "@/layout/FullLayout";
 
 const MainWrapper = styled("div")(() => ({
 	display: "flex",
@@ -21,10 +20,27 @@ const PageWrapper = styled("div")(() => ({
 	backgroundColor: "transparent",
 }));
 
-export default function NodeMonitoringLayout(props: {
+export default function FullLayout(props: {
 	children: React.ReactNode;
+	title?: string;
 }) {
 	const [isSidebarOpen, setSidebarOpen] = useState(true);
 	const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-	return <FullLayout title="Node">{props.children}</FullLayout>;
+	return (
+		<MainWrapper className="mainwrapper">
+			<ThemeProvider theme={theme}>
+				<Sidebar
+					isSidebarOpen={isSidebarOpen}
+					isMobileSidebarOpen={isMobileSidebarOpen}
+					onSidebarClose={() => setMobileSidebarOpen(false)}
+				/>
+				<PageWrapper>
+					<Container>
+						{props.title && <Typography variant="h3">{props.title}</Typography>}
+						{props.children}
+					</Container>
+				</PageWrapper>
+			</ThemeProvider>
+		</MainWrapper>
+	);
 }

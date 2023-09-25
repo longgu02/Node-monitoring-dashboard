@@ -109,23 +109,13 @@ const CPUOverall = (props: CPUOverallProps) => {
 			},
 			{
 				type: "area",
-				name: "Nice",
-				data: data["nice"],
-			},
-			{
-				type: "area",
-				name: "softIrq",
-				data: data["softIrq"],
-			},
-			{
-				type: "area",
-				name: "steal",
-				data: data["steal"],
-			},
-			{
-				type: "area",
 				name: "system",
 				data: data["system"],
+			},
+			{
+				type: "area",
+				name: "other",
+				data: data["other"],
 			},
 		],
 	};

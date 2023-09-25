@@ -91,3 +91,28 @@ export const getCPUTotal = (rawData: any) => {
 	// temp = {};
 	return result;
 };
+
+export const formatPremetheusSeries = (rawData: any, groupByAttr: string) => {
+	let result: { [x: number | string]: any }[] = [];
+	rawData.map((item: any) => {
+		result[item["metric"][groupByAttr]] = item["values"];
+	});
+	return result;
+};
+
+export const formatPieChart = (rawData: any, groupByAttr: string) => {
+	let result: { [x: number | string]: any }[] = [];
+	rawData.map((item: any) => {
+		result[item["metric"][groupByAttr]] =
+			item["values"][item["values"].length - 1][1];
+	});
+	return result;
+};
+
+export const formatPrometheusClient = (rawData: any) => {
+	let result: [number, any][] = [];
+	rawData.values.map((item: any) => {
+		result.push([new Date(item["time"]).getTime(), item["value"]]);
+	});
+	return result;
+};
