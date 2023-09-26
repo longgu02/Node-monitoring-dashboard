@@ -1,5 +1,5 @@
 "use client";
-import { ReactElement, useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import {
 	Accordion,
 	AccordionDetails,
@@ -159,7 +159,6 @@ export default function NodeMonitoring() {
 		// 	.then((res: any) => {
 		// 		// rawData = res.data.result;
 		// 		console.log("Test format", formatPrometheusClient(res.result[0]));
-
 		// 		// console.log("total", getCPUTotal(rawData));
 		// 		// setCPUTotal(getCPUTotal(rawData));
 		// 		// console.log(formatDataPrometheus(rawData));
@@ -283,9 +282,9 @@ export default function NodeMonitoring() {
 					<Typography>Network</Typography>
 				</AccordionSummary>
 				<AccordionDetails>
-					{/* {Object.keys(ramUsage).length > 0 && (
+					{Object.keys(ramUsage).length > 0 && (
 						<RAMOverall data={ramUsage} title="RAM Usage" />
-					)} */}
+					)}
 				</AccordionDetails>
 			</Accordion>
 		</Box>

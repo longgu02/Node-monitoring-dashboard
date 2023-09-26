@@ -20,15 +20,18 @@ import {
 	getNodeCPUSecTotalQuery,
 } from "@/constant/queries";
 import { bytesToGigabytes } from "./calculation";
+import { PrometheusQueryDate } from "prometheus-query";
 
 export const getCPUTotal = async (
 	hostname: string,
-	interval: number,
+	// interval: number,
+	start: PrometheusQueryDate,
+	end: PrometheusQueryDate,
 	cpu?: number | string
 ) => {
 	const data: { [key: string]: any } = {};
-	const start = new Date().getTime() - interval * 1000;
-	const end = new Date();
+	// const start = new Date().getTime() - interval * 1000;
+	// const end = new Date();
 	// System
 	await queryRange(
 		getNodeCPUSecTotalQuery(
@@ -148,14 +151,13 @@ export const getCPUTotal = async (
 	return data;
 };
 
-export const test = async (
+export const getCPUCoreMetrics = async (
 	hostname: string,
-	interval: number,
+	start: PrometheusQueryDate,
+	end: PrometheusQueryDate,
 	cpu?: number | string
 ) => {
 	const data: { [key: string]: any } = {};
-	const start = new Date().getTime() - interval * 1000;
-	const end = new Date();
 	// System
 	await queryRange(
 		CPU_SYSTEM_QUERY(hostname, Number(cpu)),
