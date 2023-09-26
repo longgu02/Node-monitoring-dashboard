@@ -34,7 +34,7 @@ const generateDataSet = (raw: number[][]) => {
 	return temp;
 };
 
-const CPUOverall = (props: CPUOverallProps) => {
+const RAMOverall = (props: CPUOverallProps) => {
 	const { data, title } = props;
 	// generateDataSet(data["idle"]);
 	const options: Highcharts.Options = {
@@ -49,18 +49,18 @@ const CPUOverall = (props: CPUOverallProps) => {
 		},
 		yAxis: {
 			labels: {
-				format: "{value}%",
+				format: "{value} GiB",
 			},
 		},
 		time: {
 			useUTC: false,
 		},
-		accessibility: {
-			point: {
-				valueDescriptionFormat:
-					"{index}. {point.category}, {point.y:,.1f} billions, {point.percentage:.1f}%.",
-			},
-		},
+		// accessibility: {
+		// 	point: {
+		// 		valueDescriptionFormat:
+		// 			"{index}. {point.category}, {point.y:,.1f} billions, {point.percentage:.1f}%.",
+		// 	},
+		// },
 		title: {
 			text: title,
 		},
@@ -69,14 +69,14 @@ const CPUOverall = (props: CPUOverallProps) => {
 			headerFormat:
 				'<span style="font-size:12px"><b>{point.key}</b></span><br>',
 			pointFormat:
-				'<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.5f}%</b><br/>',
+				'<span style="color:{series.color}">{series.name}</span>: <b>{point.y:.2f}GiB</b><br/>',
 		},
 		plotOptions: {
 			series: {
 				pointStart: Date.now() - 86400000 * 1.5,
 			},
 			area: {
-				stacking: "percent",
+				// stacking: "percent",
 				lineColor: "#666666",
 				lineWidth: 0.5,
 				marker: {
@@ -88,34 +88,29 @@ const CPUOverall = (props: CPUOverallProps) => {
 		series: [
 			{
 				type: "area",
-				name: "Idle",
-				data: data["idle"],
+				name: "Total",
+				data: data["total"],
 				pointInterval: 36e5,
 			},
 			{
 				type: "area",
-				name: "Iowait",
-				data: data["iowait"],
+				name: "Swap",
+				data: data["swap"],
 			},
 			{
 				type: "area",
-				name: "User",
-				data: data["user"],
+				name: "Cache & Buffer",
+				data: data["cache"],
 			},
 			{
 				type: "area",
-				name: "IRQs",
-				data: data["irq"],
+				name: "Free",
+				data: data["free"],
 			},
 			{
 				type: "area",
-				name: "System",
-				data: data["system"],
-			},
-			{
-				type: "area",
-				name: "Other",
-				data: data["other"],
+				name: "Used",
+				data: data["used"],
 			},
 		],
 	};
@@ -134,4 +129,4 @@ const CPUOverall = (props: CPUOverallProps) => {
 	);
 };
 
-export default CPUOverall;
+export default RAMOverall;

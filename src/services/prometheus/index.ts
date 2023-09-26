@@ -13,7 +13,6 @@ const prometheusClient = createClient("http://localhost:9090/api/v1");
 // };
 
 export const queryRange = (
-	metric: string,
 	query: any,
 	start: PrometheusQueryDate,
 	end: PrometheusQueryDate,
@@ -33,4 +32,8 @@ export const queryRange = (
 	// 	},
 	// });
 	// return _promise;
+};
+
+export const instantQuery = (query: any) => {
+	return prom.instantQuery(query);
 };

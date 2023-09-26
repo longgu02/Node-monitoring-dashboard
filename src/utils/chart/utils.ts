@@ -1,5 +1,3 @@
-import { getPercentage } from "./calculation";
-
 export const formatDataPrometheus = (rawData: any) => {
 	let result: any = {};
 	const cpuData = rawData.reduce((cpuGroup: any, item: any) => {
@@ -54,15 +52,15 @@ export const formatPrometheusDataSeries = (rawData: any) => {
 	return formatSeries(formatDataPrometheus(rawData));
 };
 
-export const formatPercentageDataSeries = (rawData: any) => {
-	const formattedData = formatDataPrometheus(rawData);
-	Object.keys(formattedData).map((key) => {
-		Object.keys(formattedData[key]).map((time) => {
-			formattedData[key][time] = getPercentage(formattedData[key][time]);
-		});
-	});
-	return formatSeries(formattedData);
-};
+// export const formatPercentageDataSeries = (rawData: any) => {
+// 	const formattedData = formatDataPrometheus(rawData);
+// 	Object.keys(formattedData).map((key) => {
+// 		Object.keys(formattedData[key]).map((time) => {
+// 			formattedData[key][time] = getPercentage(formattedData[key][time]);
+// 		});
+// 	});
+// 	return formatSeries(formattedData);
+// };
 
 export const getCPUTotal = (rawData: any) => {
 	const formattedData = formatDataPrometheus(rawData);
@@ -109,10 +107,16 @@ export const formatPieChart = (rawData: any, groupByAttr: string) => {
 	return result;
 };
 
-export const formatPrometheusClient = (rawData: any) => {
+export const formatPrometheusClient = (
+	rawData: any,
+	formatter?: (value: number) => number | ((value: string) => string)
+) => {
 	let result: [number, any][] = [];
 	rawData.values.map((item: any) => {
-		result.push([new Date(item["time"]).getTime(), item["value"]]);
+		result.push([
+			new Date(item["time"]).getTime(),
+			formatter ? formatter(item["value"]) : item["value"],
+		]);
 	});
 	return result;
 };
